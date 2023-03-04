@@ -1,0 +1,18 @@
+{% extends 'djank/base.html'%}
+{% block content %}
+<div class="card border-secondary mb-3" style="max-width: 18rem;">
+    <div class="card-body text-secondary">
+        <h5 class="card-title">Имя клиента: {{object.client}}</h5>
+        <p class="card-text">Тема рассылки: {{object.message}}</p>
+        <p class="card-text">Время рассылки: {{object.time}}</p>
+        <p class="card-text">Дата начала рассылки: {{object.date}}</p>
+        <p class="card-text">Периодичность рассылки: {{object.periodicity}}</p>
+        <p class="card-text">Статус: {{object.status}}</p>
+        <p class="card-text">Создатель: {{object.owner}}</p>
+        <a class="p-1 btn btn-primary" href="{% url 'djank:distribution_update' object.pk %}">Редактировать</a>
+        |
+        <a class="p-1 btn btn-danger" href="{% url 'djank:distribution_delete' object.pk %}">Удалить</a>
+    </div>
+    <a class="p-2 btn btn-outline-secondary" href="{% url 'djank:distribution' %}">Назад</a>
+</div>
+{% endblock %}

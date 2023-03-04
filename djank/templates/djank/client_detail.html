@@ -1,0 +1,14 @@
+{% extends 'djank/base.html'%}
+{% block content %}
+<div class="card border-secondary mb-3" style="max-width: 18rem;">
+    <div class="card-body text-secondary">
+        <h5 class="card-title">ФИО клиента: {{object.last_name}} {{object.first_name}} {{object.middle_name}}</h5>
+        <p class="card-text">Email: {{object.email}}</p>
+        <p class="card-text">Комментарий: {{object.comment}}</p>
+        <a class="p-1 btn btn-primary" href="{% url 'djank:client_update' object.pk %}">Редактировать</a>
+        |
+        <a class="p-1 btn btn-danger" href="{% url 'djank:client_delete' object.pk %}">Удалить</a>
+    </div>
+    <a class="p-2 btn btn-outline-secondary" href="{% url 'djank:client' %}">Назад</a>
+</div>
+{% endblock %}

@@ -10,6 +10,7 @@ class Client(models.Model):
     middle_name = models.CharField(max_length=250, verbose_name='Отчество')
     email = models.CharField(max_length=250, verbose_name='Почта')
     comment = models.CharField(max_length=250, verbose_name='Комментарий')
+    owner = models.ForeignKey('users.User', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.last_name} {self.first_name} {self.middle_name}'
@@ -22,6 +23,7 @@ class Client(models.Model):
 class Message(models.Model):
     theme = models.CharField(max_length=250, verbose_name='тема')
     text = models.CharField(max_length=250, verbose_name='текст')
+    owner = models.ForeignKey('users.User', on_delete=models.CASCADE)
     def __str__(self):
         return f'{self.theme}'
 
@@ -50,6 +52,4 @@ class DistributionList(models.Model):
     date = models.DateField(default=date.today(), verbose_name='Дата')
     periodicity = models.CharField(choices=PERIODS, default=PERIOD_DAY, max_length=10, verbose_name='Период')
     status = models.CharField(choices=STATUSES, default=STATUS_CREATED, max_length=10, verbose_name='Статус')
-
-class ReportList(models.Model):
-    pass
+    owner = models.ForeignKey('users.User', on_delete=models.CASCADE)

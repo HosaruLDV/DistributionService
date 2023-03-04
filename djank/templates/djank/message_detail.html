@@ -1,0 +1,14 @@
+{% extends 'djank/base.html'%}
+{% block content %}
+<div class="card border-secondary mb-3" style="max-width: 18rem;">
+    <div class="card-body text-secondary">
+        <h5 class="card-title">Тема письма: {{object.theme}}</h5>
+        <p class="card-text">Текст письма: {{object.text}}</p>
+        <a class="p-1 btn btn-primary" href="{% url 'djank:message_update' object.pk %}">Редактировать</a>
+        |
+        <a class="p-1 btn btn-danger" href="{% url 'djank:message_delete' object.pk %}">Удалить</a>
+    </div>
+    <a class="p-2 btn btn-outline-secondary" href="{% url 'djank:message' %}">Назад</a>
+</div>
+{% endblock %}
+

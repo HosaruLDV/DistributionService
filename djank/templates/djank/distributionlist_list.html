@@ -20,8 +20,12 @@
             <td>{{object.message}}</td>
             <td>{{object.time}}</td>
             <td>{{object.periodicity}}</td>
-            <td>{{object.status}}</td>
+            <td>{{object.status}} {% if object.status == 'launched' %}
+                <a class="p-1 btn btn-danger" href="{% url 'djank:status' object.pk %}">X</a>
+                {% endif %}
+            </td>
             <td>
+
                 <a class="p-1 btn btn-primary" href="{% url 'djank:distribution_update' object.pk %}">Редактировать</a>
                 <a class="p-1 btn btn-danger" href="{% url 'djank:distribution_delete' object.pk %}">Удалить</a>
             </td>
@@ -30,4 +34,5 @@
         </tbody>
     </table>
 </div>
+
 {% endblock %}

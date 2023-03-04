@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djank',
     'django_celery_beat',
+    'users',
+    'crispy_forms',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +81,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kurs',
+        'NAME': 'project',
         'HOST': 'localhost',
         'USER': 'hosaru',
         'PASSWORD':'Kiryha2805',
@@ -127,10 +130,18 @@ STATICFILES_DIRS = (
     BASE_DIR / 'static',
 )
 
+MEDIA_ROOT = BASE_DIR / 'media/'
+MEDIA_URL = '/media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.User'
+LOGIN_URL = '/users/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL ='/'
 
 REDIS_HOST = "0.0.0.0"
 REDIS_PORT = "6379"
@@ -143,8 +154,19 @@ CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 
-EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'sdakhj@mail.ru'
-EMAIL_HOST_PASSWORD = 'uujfafiznkigoqpr'
+EMAIL_HOST_PASSWORD = 'FcbX3TVzJwLt4cNvr9AU'
 EMAIL_USE_SSL = True
+
+CACHE_ENABLED = True
+
+if CACHE_ENABLED:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': 'redis://127.0.0.1:6379',
+            'TIMEOUT' : 300
+        }
+    }
