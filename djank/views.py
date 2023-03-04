@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
@@ -21,7 +22,7 @@ class ClientListView(ListView):
 
 class ClientCreateView(CreateView):
     model = Client
-    fields = ('first_name', 'last_name', 'middle_name', 'email', 'comment')
+    form_class = ClientForm
     success_url = reverse_lazy('djank:client')
 
     def form_valid(self, form):
@@ -52,7 +53,7 @@ class ClientDetailView(UserPassesTestMixin, DetailView):
 
 class ClientUpdateView(UserPassesTestMixin, UpdateView):
     model = Client
-    fields = ('first_name', 'last_name', 'middle_name', 'email', 'comment')
+    form_class = ClientForm
     success_url = reverse_lazy('djank:client')
 
     def test_func(self):
@@ -72,7 +73,7 @@ class MessageListView(ListView):
 
 class MessageCreateView(CreateView):
     model = Message
-    fields = ('theme', 'text')
+    form_class = MessageForm
     success_url = reverse_lazy('djank:message')
 
     def form_valid(self, form):
@@ -103,7 +104,7 @@ class MessageDetailView(UserPassesTestMixin, DetailView):
 
 class MessageUpdateView(UserPassesTestMixin, UpdateView):
     model = Message
-    fields = ('theme', 'text')
+    form_class = MessageForm
     success_url = reverse_lazy('djank:message')
 
     def test_func(self):
@@ -123,7 +124,7 @@ class DistributionListView(ListView):
 
 class DistributionCreateView(CreateView):
     model = DistributionList
-    fields = ('client', 'message', 'time', 'date', 'periodicity', 'status')
+    form_class = DistributionForm
     success_url = reverse_lazy('djank:distribution')
 
     def form_valid(self, form):
@@ -136,7 +137,7 @@ class DistributionCreateView(CreateView):
 
 class DistributionUpdateView(UserPassesTestMixin, UpdateView):
     model = DistributionList
-    fields = ('__all__')
+    form_class = DistributionForm
     success_url = reverse_lazy('djank:distribution')
 
     def test_func(self):
@@ -162,6 +163,7 @@ class DistributionDetailView(UserPassesTestMixin, DetailView):
         return distribution.owner == self.request.user or self.request.user.is_staff
 
 
+@user_passes_test(lambda u: u.is_staff)
 def change_distribution_status(requests, pk):
     distribution_item = get_object_or_404(DistributionList, pk=pk)
     if distribution_item.status == DistributionList.STATUS_LAUNCHED:
